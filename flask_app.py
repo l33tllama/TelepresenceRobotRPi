@@ -13,15 +13,15 @@ def index():
 
 @app.route('/js/<path:path>')
 def js_files(path):
-    return send_from_directory('html/js', path)
+    return send_from_directory('static/js', path)
 
 @app.route('/css/<path:path>')
 def css_files(path):
-    return send_from_directory('html/css', path)
+    return send_from_directory('static/css', path)
 
 @app.route('/images/<path:path>')
 def image_files(path):
-    return send_from_directory('html/img', path)
+    return send_from_directory('static/img', path)
 
 if __name__ == '__main__':
     socketio.run(app)
