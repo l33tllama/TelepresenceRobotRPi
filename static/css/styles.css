@@ -22,7 +22,21 @@ body{
 }
 .main{
     margin: 0 auto;
+    width: 480px;
+    background: #eee;
 }
 .content{
-    width: 50%;
+    width: 100%;
+}
+#control-buttons{
+    /*width: 300px;*/
+    /*margin: 0 auto;*/
+    /*width: 200px;*/
+}
+.control-btn{
+    width: 100px;
+}
+.controls-table{
+    
+    text-align: center;
 }

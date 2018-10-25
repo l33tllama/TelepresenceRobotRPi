@@ -5,8 +5,13 @@
         <title>Telepresence Robot UI</title>  
         <script src="js/socketio.js"></script>
         <script src="js/jquery-3.3.1.min.js"></script> 
+        <script src="js/bootstrap.min.js"></script> 
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/normalize.css"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/fontawesome-all.css"/>
+        <link rel="stylesheet" href="css/fontawesome.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     </head>
     <body>
         <div class="header">
@@ -15,10 +20,106 @@
         <div class="main">
             <div class="content">
                 Cool Stuff goes here
+                <div id="control-buttons">
+                    <table class="table controls-table">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button id="btn-up" type="button" class="control-btn btn btn-primary">
+                                        <i class="fas fa-arrow-circle-up"></i>
+                                    </button>
+                                </td>
+                                <td></td>
+                            </tr>
+                          <tr>
+                            <td>
+                                <button id="btn-left" type="button" class="control-btn btn btn-primary">
+                                    <i class="fas fa-arrow-circle-left"></i>
+                                </button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <button id="btn-right" type="button" class="control-btn btn btn-primary">
+                                    <i class="fas fa-arrow-circle-right"></i>
+                                </button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td>
+                                <button id="btn-down" type="button" class="control-btn btn btn-primary">
+                                    <i class="fas fa-arrow-circle-down"></i>
+                                </button>
+                            </td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
             </div>
         </div>
     </body>
     <script type="text/javascript">
-          const socket = io('http://' + window.location.host);
+        var host = 'http://' + window.location.host;
+        console.log("connecting to " + host);
+          const socket = io(host);
+          socket.on("connect", function(socket){
+              console.log("io connection");
+          });
+          var dirs = { "left": false, "right": false, "up": false, "down" : false};
+          function update_movement(){
+              if(!dirs.left && !dirs.right && !dirs.up && !dirs.down){
+                  socket.emit("message", 0);
+              }
+              if(dirs.up && !dirs.down){
+                  socket.emit("message", 5);
+              }
+              if(dirs.left && !dirs.right){
+                  socket.emit("message", 6);
+              }
+              if(!dirs.left && dirs.right){
+                  socket.emit("message", 7);
+              }
+              if(!dirs.up && dirs.down){
+                  socket.emit("message", 8);
+              }
+              //socket.emit("message", "data");
+          }
+          $("#btn-up").mousedown(function(){
+              console.log("up button pressed");
+              dirs.up = true;
+              update_movement();
+          });
+          $("#btn-up").mouseup(function(){
+              dirs.up = false;
+              update_movement();
+          });
+          $("#btn-down").mousedown(function(){
+              dirs.down = true;
+              update_movement();
+          });
+          $("#btn-down").mouseup(function(){
+              dirs.down = false;
+              update_movement();
+          });
+          $("#btn-left").mousedown(function(){
+              dirs.left = true;
+              update_movement();
+          });
+          $("#btn-left").mouseup(function(){
+              dirs.left = false;
+              update_movement();
+          });
+          $("#btn-right").mousedown(function(){
+              dirs.right = true;
+              update_movement();;
+          });
+          $("#btn-right").mouseup(function(){
+              dirs.right = false;
+              update_movement();
+          })
     </script>
 </html>

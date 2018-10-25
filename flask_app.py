@@ -1,11 +1,26 @@
 #!/usr/bin/python
 from flask import Flask, render_template, send_from_directory
 from flask_socketio import SocketIO
+import smbus2
+
+bus = smbus2.SMBus(1)
+address = 0x04
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['host'] = '0.0.0.0'
 socketio = SocketIO(app)
+
+@socketio.on('message')
+def handle_message(message):
+    print('received message: ' + str(message))
+    if isinstance(message, int):
+        if message > -1 and message < 9:
+            print("sending int " + str(message))
+            bus.write_byte(address, message)
+    else:
+        print("message is not an int?")
+
 
 @app.route('/')
 def index():
