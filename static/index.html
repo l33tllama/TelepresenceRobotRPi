@@ -19,7 +19,7 @@
         </div>
         <div class="main">
             <div class="content">
-                Cool Stuff goes here
+                <div id="webcam-div"></div>
                 <div id="control-buttons">
                     <table class="table controls-table">
                         <thead>
@@ -63,6 +63,11 @@
         </div>
     </body>
     <script type="text/javascript">
+        var webcam_url = "http://" + window.location.host.split(":")[0] + ":8080?action=stream";
+        var webcam_html = "<img src=\"" + webcam_url + "\"/>";
+        $("#webcam-div").html(webcam_html);
+        console.log("Webcam url: " + webcam_url);
+        console.log("Webcam html: " + webcam_html);
         var host = 'http://' + window.location.host;
         console.log("connecting to " + host);
           const socket = io(host);
@@ -78,10 +83,10 @@
                   socket.emit("message", 5);
               }
               if(dirs.left && !dirs.right){
-                  socket.emit("message", 6);
+                  socket.emit("message", 7);
               }
               if(!dirs.left && dirs.right){
-                  socket.emit("message", 7);
+                  socket.emit("message", 6);
               }
               if(!dirs.up && dirs.down){
                   socket.emit("message", 8);
