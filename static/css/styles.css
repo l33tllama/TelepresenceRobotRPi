@@ -22,7 +22,7 @@ body{
 }
 .main{
     margin: 0 auto;
-    width: 480px;
+    width: 400px;
     background: #eee;
 }
 .content{
@@ -34,7 +34,7 @@ body{
     /*width: 200px;*/
 }
 #webcam-div img{
-    width: 480px;
+    width: 400px;
 }
 .control-btn{
     width: 100px;

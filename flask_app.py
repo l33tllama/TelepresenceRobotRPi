@@ -2,6 +2,7 @@
 from flask import Flask, render_template, send_from_directory
 from flask_socketio import SocketIO
 import smbus2
+import os
 
 bus = smbus2.SMBus(1)
 address = 0x04
@@ -21,6 +22,12 @@ def handle_message(message):
     else:
         print("message is not an int?")
 
+@socketio.on('speak')
+def handle_message(message):
+    if isinstance(message, str):
+        os.system("espeak '" + message + "'")
+    else:
+        print("message is not a string")
 
 @app.route('/')
 def index():

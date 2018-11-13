@@ -21,6 +21,12 @@
             <div class="content">
                 <div id="webcam-div"></div>
                 <div id="control-buttons">
+                    <div class="input-group">
+                        <input id="speak-val" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                        <div class="input-group-append">
+                            <button id="speak-btn" class="btn btn-success" type="button">Speak</button>
+                        </div>
+                    </div>
                     <table class="table controls-table">
                         <thead>
                         </thead>
@@ -125,6 +131,11 @@
           $("#btn-right").mouseup(function(){
               dirs.right = false;
               update_movement();
+          });
+          $("#speak-btn").click(function(){
+              var speak_val = $("#speak-val").val();
+              console.log("Saying " + speak_val);
+              socket.emit("speak", speak_val);
           })
     </script>
 </html>
